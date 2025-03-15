@@ -1,5 +1,4 @@
 import json
-
 import chardet
 import nltk
 from nltk.corpus import stopwords
@@ -17,7 +16,6 @@ with open('Congratulations.txt', 'rb') as file:
     encoding = result['encoding']
 
 #print(f"Определена кодировка: {encoding}")
-
 
 
 # Чтение текста из файла

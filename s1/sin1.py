@@ -15,7 +15,7 @@ with open('Congratulations.txt', 'rb') as file:
     result = chardet.detect(raw_data)
     encoding = result['encoding']
 
-#print(f"Определена кодировка: {encoding}")
+# print(f"Определена кодировка: {encoding}")
 
 
 # Чтение текста из файла
@@ -29,10 +29,12 @@ text = nltk.word_tokenize(text)
 stop_words = set(stopwords.words('russian'))
 
 # Лемматизация
-lemmatized_words = [morph.parse(word)[0].normal_form for word in text if word.lower() not in stop_words]
+lemmatized_words = [morph.parse(
+    word)[0].normal_form for word in text if word.lower() not in stop_words]
 
 # Стемминг
-stemmed_words = [stemmer.stem(word) for word in text if word.lower() not in stop_words]
+stemmed_words = [stemmer.stem(word)
+                 for word in text if word.lower() not in stop_words]
 
 # Сохранение результатов лемматизации в файл
 with open('lemmatized_output.txt', 'w', encoding='utf-8') as file:
@@ -48,21 +50,19 @@ print("Лемматизация и стемминг завершены. Резу
 
 result = ''.join(text)
 
+
 def tokenezation(text):
-    tok=[]
+    tok = []
     for i in text:
         tok.append(i)
     return tok
 
 
-
-
-
-
 def vectorization(text: str) -> dict[int]:
     return {i: word for i, word in enumerate(text)}
 
-lemmatized_words=''.join(lemmatized_words)
+
+lemmatized_words = ''.join(lemmatized_words)
 tokenization_text = tokenezation(lemmatized_words)
 
 vectorization_text = vectorization(tokenization_text)
@@ -75,4 +75,4 @@ with open('tokenization.txt', 'w', encoding='utf-8') as file:
 # Сохранение результатов стемминга в файл
 
 with open('vectorization.json', 'w', encoding='utf-8') as file:
-    json.dump(vec,file)
+    json.dump(vec, file)

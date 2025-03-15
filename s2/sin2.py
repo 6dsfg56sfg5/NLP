@@ -1,35 +1,27 @@
-import json
-import re
-
-import chardet
-import nltk
-from nltk.corpus import stopwords
-from pymorphy2 import MorphAnalyzer
-from nltk.stem import SnowballStemmer
-
-import nltk
+import math
 import pymorphy2
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from collections import defaultdict
 with open('Congratulations.txt', 'r', encoding='utf-8') as file:
     text = file.read()
 
 # Инициализация лемматизатора и списка стоп-слов
-
 stop_words = set(stopwords.words('russian'))
 morph = pymorphy2.MorphAnalyzer()
+
+
 def preprocess_text(text):
     # Токенизация
     tokens = word_tokenize(text.lower())
     # Удаление стоп-слов и лемматизация
-    tokens = [morph.parse(word)[0].normal_form for word in tokens if word.isalnum() and word not in stop_words]
+    tokens = [morph.parse(word)[0].normal_form for word in tokens if word.isalnum(
+    ) and word not in stop_words]
     return tokens
+
 
 # Пример использования
 processed_tokens = preprocess_text(text)
-
 
 
 def build_vocabulary(corpus):
@@ -38,6 +30,7 @@ def build_vocabulary(corpus):
     for text in corpus:
         vocab.update(text)
     return list(vocab)
+
 
 def bow_vectorize(text, vocab):
     # Создание вектора BoW
@@ -59,7 +52,7 @@ with open('bag_of_word.txt', 'w', encoding='utf-8') as file:
     for text in corpus:
         vector = bow_vectorize(text, vocab)
         file.write(f"Text: {text} -> BoW Vector: {vector} \n")
-import math
+
 
 def compute_tf(text, vocab):
     # Вычисление Term Frequency (TF)
@@ -71,6 +64,7 @@ def compute_tf(text, vocab):
         tf[i] = word_counts.get(word, 0) / len(text)
     return tf
 
+
 def compute_idf(corpus, vocab):
     # Вычисление Inverse Document Frequency (IDF)
     idf = [0] * len(vocab)
@@ -79,6 +73,7 @@ def compute_idf(corpus, vocab):
         doc_count = sum(1 for text in corpus if word in text)
         idf[i] = math.log((total_docs + 1) / (doc_count + 1)) + 1
     return idf
+
 
 def compute_tfidf(corpus, vocab):
     # Вычисление TF-IDF
@@ -90,6 +85,7 @@ def compute_tfidf(corpus, vocab):
         tfidf_vectors.append(tfidf)
     return tfidf_vectors
 
+
 with open('tf_idf.txt', 'w', encoding='utf-8') as file:
     tfidf_vectors = compute_tfidf(corpus, vocab)
     for i, vector in enumerate(tfidf_vectors):
@@ -97,7 +93,3 @@ with open('tf_idf.txt', 'w', encoding='utf-8') as file:
 
 with open('лемстопток.txt', 'w', encoding='utf-8') as file:
     file.write(' '.join(map(str, processed_tokens)))
-
-
-
-

@@ -37,10 +37,12 @@ X = df['Price']  # переменные для проверки влияния
 
 # В моем случае я дропаю базовую переменную, а не только. Y
 
-print("tedygh")
 # Пример использования
 
 if __name__ == "__main__":
     # Получаем предсказания от нейрона
-    predictions = neuron(df)
-    print("Predictions:", predictions)
+
+    with open('output.txt', 'w', encoding='utf-8') as file:
+        predictions = neuron(df)
+        file.write(str(predictions))
+

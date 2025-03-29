@@ -1,4 +1,4 @@
-Epoch 0, Loss: 0.089869
+Epoch 0, Loss: 0.090800
 Epoch 100, Loss: 0.121723
 Epoch 200, Loss: 0.121723
 Epoch 300, Loss: 0.121723

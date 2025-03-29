@@ -3,7 +3,7 @@ import numpy as np
 
 
 class NeuralNetwork:
-    def __init__(self, hidden_neurons: int = 1):
+    def __init__(self, hidden_neurons: int):
         self.hidden_neurons = hidden_neurons
         self.neurons = []  # Список для хранения нейронов (их коэффициентов)
 

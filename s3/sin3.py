@@ -45,4 +45,3 @@ if __name__ == "__main__":
     with open('output.txt', 'w', encoding='utf-8') as file:
         predictions = neuron(df)
         file.write(str(predictions))
-

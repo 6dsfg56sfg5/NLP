@@ -80,6 +80,8 @@ class TextGenerator:
                 h_prev = np.zeros(self.hidden_size)
                 ptr = 0
                 smooth_loss = -np.log(1.0 / self.vocab_size) * seq_length
+                total_loss = 0
+                count = 0
 
                 while ptr < len(text) - seq_length - 1:
                     inputs = text[ptr:ptr + seq_length]
@@ -97,9 +99,15 @@ class TextGenerator:
                         if targets[t] in self.char_to_idx:
                             smooth_loss = smooth_loss * 0.999 + \
                                 (-np.log(ys[t][self.char_to_idx[targets[t]]])) * 0.001
+                            total_loss += - \
+                                np.log(ys[t][self.char_to_idx[targets[t]]])
+                            count += 1
 
                     h_prev = hs[len(inputs) - 1]
                     ptr += seq_length
+
+                epoch_loss = total_loss / count if count > 0 else smooth_loss
+                print(f"\nЭпоха {epoch + 1}/{epochs}, Loss: {epoch_loss:.4f}")
 
                 if epoch % 2 == 0:
                     self.generate_text(text[:15])

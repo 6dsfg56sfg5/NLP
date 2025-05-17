@@ -23,11 +23,6 @@ print(f"Количество текстов: {len(texts)}")
 print(f"Количество категорий: {len(target_names)}")
 
 
-nltk.download('stopwords')
-nltk.download('wordnet')
-nltk.download('omw-1.4')
-
-
 def preprocess_text(text):
     # Приведение к нижнему регистру
     text = text.lower()
